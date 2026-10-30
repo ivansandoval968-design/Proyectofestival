@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mar de Perreo 2027 | Providencia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        tropical: {
+                            dark: '#011c27',     /* Deep ocean teal */
+                            teal: '#024254',
+                            cyan: '#00f3ff',     /* Bioluminescence */
+                            sunset: '#ff5e62',   /* Vibrant red/orange */
+                            sand: '#ff9966',     /* Warm orange */
+                            leaf: '#00b09b'      /* Tropical green */
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "linear-gradient(to bottom, rgba(1, 28, 39, 0.3), rgba(1, 28, 39, 1)), url('https://images.unsplash.com/photo-1540206395-68808572332f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",
+                        'gradient-sunset': 'linear-gradient(to right, #ff9966, #ff5e62)',
+                        'gradient-water': 'linear-gradient(to right, #00b09b, #00f3ff)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #011c27; /* Deep tropical teal */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .text-glow-cyan {
+            text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff;
+        }
+        
+        .text-glow-sunset {
+            text-shadow: 0 0 10px #ff5e62, 0 0 20px #ff9966;
+        }
+
+        .box-glow:hover {
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .box-glow-sunset:hover {
+            box-shadow: 0 0 20px rgba(255, 94, 98, 0.4), inset 0 0 10px rgba(255, 153, 102, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating Animation for Stages */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Modal Backdrop Filter */
+        .glass-panel {
+            background: rgba(2, 66, 84, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+        }
+        .glass-panel-sunset {
+            background: rgba(255, 94, 98, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 153, 102, 0.3);
+        }
+        
+        /* Custom Scrollbar for Modals on Mobile */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2); 
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 243, 255, 0.5); 
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-tropical-sunset selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 glass-panel border-none" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <span class="font-display font-black text-2xl tracking-tighter text-white">
+                        MAR DE <span class="text-transparent bg-clip-text bg-gradient-sunset text-glow-sunset">PERREO</span>
+                    </span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#concepto" class="hover:text-tropical-sand transition-colors text-sm uppercase tracking-widest font-semibold">Concepto</a>
+                        <a href="#lineup" class="hover:text-tropical-sand transition-colors text-sm uppercase tracking-widest font-semibold">Line Up</a>
+                        <a href="#escenarios" class="hover:text-tropical-sand transition-colors text-sm uppercase tracking-widest font-semibold">Escenarios</a>
+                        <a href="#gastronomia" class="hover:text-tropical-sand transition-colors text-sm uppercase tracking-widest font-semibold">Experiencia</a>
+                        <a href="#boleteria" class="hover:text-tropical-sand transition-colors text-sm uppercase tracking-widest font-semibold">Boletería</a>
+                        <a href="#modelo" class="hover:text-tropical-sand transition-colors text-sm uppercase tracking-widest font-semibold">Modelo Canvas</a>
+                        <a href="#marketing" class="hover:text-tropical-sand transition-colors text-sm uppercase tracking-widest font-semibold">Estrategia</a>
+                        <button onclick="openModal()" class="bg-gradient-sunset text-white px-6 py-2 rounded-full font-bold uppercase tracking-wider hover:opacity-90 transition-opacity text-sm shadow-[0_0_15px_rgba(255,94,98,0.5)]">
+                            Acceso VIP
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="text-white hover:text-tropical-sand p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobileMenu" class="md:hidden hidden bg-tropical-dark/95 backdrop-blur-xl absolute w-full left-0 border-b border-white/10 shadow-2xl flex-col items-center py-6 space-y-6 top-20">
+                <a href="#concepto" onclick="toggleMobileMenu()" class="hover:text-tropical-sand transition-colors text-base uppercase tracking-widest font-bold text-white">Concepto</a>
+                <a href="#lineup" onclick="toggleMobileMenu()" class="hover:text-tropical-sand transition-colors text-base uppercase tracking-widest font-bold text-white">Line Up</a>
+                <a href="#escenarios" onclick="toggleMobileMenu()" class="hover:text-tropical-sand transition-colors text-base uppercase tracking-widest font-bold text-white">Escenarios</a>
+                <a href="#gastronomia" onclick="toggleMobileMenu()" class="hover:text-tropical-sand transition-colors text-base uppercase tracking-widest font-bold text-white">Experiencia</a>
+                <a href="#boleteria" onclick="toggleMobileMenu()" class="hover:text-tropical-sand transition-colors text-base uppercase tracking-widest font-bold text-white">Boletería</a>
+                <a href="#modelo" onclick="toggleMobileMenu()" class="hover:text-tropical-sand transition-colors text-base uppercase tracking-widest font-bold text-white">Modelo Canvas</a>
+                <a href="#marketing" onclick="toggleMobileMenu()" class="hover:text-tropical-sand transition-colors text-base uppercase tracking-widest font-bold text-white">Estrategia</a>
+                <button onclick="toggleMobileMenu(); openModal()" class="bg-gradient-sunset text-white px-8 py-3 rounded-full font-bold uppercase tracking-wider hover:opacity-90 transition-opacity shadow-[0_0_15px_rgba(255,94,98,0.5)]">
+                    Acceso VIP
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-tropical-dark/60 to-tropical-dark z-0"></div>
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-20">
+            <div class="inline-block px-4 py-1 rounded-full border border-tropical-sand/50 bg-tropical-sunset/20 backdrop-blur-md text-tropical-sand font-bold tracking-[0.3em] uppercase mb-6 text-sm md:text-base animate-pulse">
+                Providencia, Colombia • 2027
+            </div>
+            <h1 class="font-display font-black text-5xl md:text-8xl lg:text-9xl tracking-tighter leading-none mb-6 text-white drop-shadow-2xl">
+                MAR DE<br><span class="text-transparent bg-clip-text bg-gradient-sunset text-glow-sunset">PERREO</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 font-medium mb-10 max-w-2xl mx-auto drop-shadow-md">
+                <span class="font-bold text-tropical-cyan uppercase tracking-widest text-lg block mb-2">The Caribbean Urban Experience</span>
+                Cuentan que hay un lugar donde el mar de los siete colores respira al ritmo del bajo. Un Edén eco-urbano donde 10,000 almas se funden con la naturaleza. Esta es la leyenda.
+            </p>
+            
+            <!-- Countdown -->
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-12">
+                <div class="flex flex-col items-center glass-panel-sunset p-4 rounded-xl min-w-[80px]">
+                    <span class="text-3xl md:text-5xl font-display font-bold text-tropical-sand" id="days">00</span>
+                    <span class="text-xs uppercase tracking-widest text-white/70">Días</span>
+                </div>
+                <div class="flex flex-col items-center glass-panel-sunset p-4 rounded-xl min-w-[80px]">
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white" id="hours">00</span>
+                    <span class="text-xs uppercase tracking-widest text-white/70">Horas</span>
+                </div>
+                <div class="flex flex-col items-center glass-panel-sunset p-4 rounded-xl min-w-[80px]">
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white" id="minutes">00</span>
+                    <span class="text-xs uppercase tracking-widest text-white/70">Min</span>
+                </div>
+                <div class="flex flex-col items-center glass-panel-sunset p-4 rounded-xl min-w-[80px]">
+                    <span class="text-3xl md:text-5xl font-display font-bold text-tropical-cyan" id="seconds">00</span>
+                    <span class="text-xs uppercase tracking-widest text-white/70">Seg</span>
+                </div>
+            </div>
+
+            <button onclick="openModal()" class="group relative px-8 py-4 bg-transparent border-2 border-tropical-sand text-tropical-sand uppercase font-bold tracking-widest rounded-full overflow-hidden hover:text-white transition-colors duration-300">
+                <div class="absolute inset-0 bg-gradient-sunset transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out -z-10"></div>
+                Únete a la Lista de Espera
+            </button>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#concepto" class="text-white/50 hover:text-tropical-sand transition-colors">
+                <i class="fas fa-chevron-down text-3xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section id="concepto" class="py-24 relative overflow-hidden bg-tropical-dark">
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-tropical-teal/30 via-tropical-dark to-tropical-dark -z-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display font-black text-4xl md:text-5xl mb-4 text-white">EL VIAJE: LA LEYENDA DE <span class="text-transparent bg-clip-text bg-gradient-water">3 DÍAS</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg italic">"Todo peregrino del perreo debe vivir este ritual. Tres capítulos que transformarán tu forma de sentir la música, desde el ocaso hasta la bioluminiscencia."</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Day 1 -->
+                <div class="glass-panel-sunset p-8 rounded-2xl box-glow-sunset transition-all duration-300 reveal border-t-4 border-t-tropical-sand relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-9xl text-tropical-sand"><i class="fas fa-sun"></i></div>
+                    <div class="text-tropical-sand text-4xl mb-4 relative z-10"><i class="fas fa-sun"></i></div>
+                    <h3 class="text-2xl font-bold font-display mb-2 text-white relative z-10">Día 1: Welcome to Providencia</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4 relative z-10">Apertura del festival, bienvenida a visitantes. DJs, artistas urbanos nacionales, talentos locales y programación inmersiva de atardecer.</p>
+                </div>
+                <!-- Day 2 -->
+                <div class="glass-panel p-8 rounded-2xl box-glow transition-all duration-300 reveal delay-100 border-t-4 border-t-tropical-cyan relative overflow-hidden bg-tropical-teal/40">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-9xl text-tropical-cyan"><i class="fas fa-fire"></i></div>
+                    <div class="text-tropical-cyan text-4xl mb-4 relative z-10"><i class="fas fa-fire"></i></div>
+                    <h3 class="text-2xl font-bold font-display mb-2 text-white relative z-10">Día 2: The Urban Takeover</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4 relative z-10">Jornada de mayor convocatoria, con artistas principales nacionales e internacionales y el espectáculo central de producción visual.</p>
+                </div>
+                <!-- Day 3 -->
+                <div class="glass-panel-sunset p-8 rounded-2xl box-glow-sunset transition-all duration-300 reveal delay-200 border-t-4 border-t-tropical-sunset relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-10 text-9xl text-tropical-sunset"><i class="fas fa-globe-americas"></i></div>
+                    <div class="text-tropical-sunset text-4xl mb-4 relative z-10"><i class="fas fa-globe-americas"></i></div>
+                    <h3 class="text-2xl font-bold font-display mb-2 text-white relative z-10">Día 3: One Last Paradise</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4 relative z-10">Experiencias especiales en la isla, programación musical de cierre, colaboraciones legendarias y despedida del festival.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Line Up Section (Interactive) -->
+    <section id="lineup" class="py-24 bg-tropical-dark border-y border-white/10 relative">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-tropical-sunset/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-tropical-cyan/10 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display font-black text-5xl md:text-7xl mb-4 tracking-tighter text-white">LOS <span class="text-transparent bg-clip-text bg-gradient-sunset">ELEGIDOS</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg italic mb-4">"Los dioses del Olimpo urbano han escuchado el llamado de la isla. Ellos serán los guías de nuestra ceremonia."</p>
+                <p class="text-tropical-sand font-bold tracking-[0.2em] uppercase text-sm">Toca el nombre del artista para revelar su poder</p>
+            </div>
+
+            <!-- Headliners Colombianos -->
+            <div class="mb-16 reveal text-center">
+                <h3 class="text-tropical-leaf text-sm uppercase tracking-[0.3em] mb-8 font-bold">Headliners Colombia</h3>
+                <div class="flex flex-wrap justify-center gap-4 md:gap-8 font-display font-black text-4xl md:text-6xl text-white">
+                    <span onclick="openArtistModal('feid')" class="hover:text-tropical-leaf transition-all duration-300 cursor-pointer hover:scale-110 hover:text-glow-cyan inline-block">FEID</span>
+                    <span class="text-tropical-teal/50">•</span>
+                    <span onclick="openArtistModal('karolg')" class="hover:text-tropical-sunset transition-all duration-300 cursor-pointer hover:scale-110 hover:text-glow-sunset inline-block">KAROL G</span>
+                    <span class="text-tropical-teal/50">•</span>
+                    <span onclick="openArtistModal('jbalvin')" class="hover:text-tropical-cyan transition-all duration-300 cursor-pointer hover:scale-110 hover:text-glow-cyan inline-block">J BALVIN</span>
+                    <span class="text-tropical-teal/50">•</span>
+                    <span onclick="openArtistModal('maluma')" class="hover:text-tropical-sand transition-all duration-300 cursor-pointer hover:scale-110 hover:text-glow-sunset inline-block">MALUMA</span>
+                </div>
+            </div>
+
+            <!-- Invitados Internacionales -->
+            <div class="mb-16 reveal text-center bg-tropical-teal/20 backdrop-blur-sm py-12 rounded-3xl border border-tropical-sunset/30 relative overflow-hidden shadow-2xl">
+                <h3 class="text-tropical-sunset text-sm uppercase tracking-[0.3em] mb-8 font-bold">5 Invitados Internacionales Exclusivos</h3>
+                <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 font-display font-bold text-2xl md:text-4xl text-white/90">
+                    <span onclick="openArtistModal('badbunny')" class="cursor-pointer hover:text-tropical-sand transition-colors group">BAD BUNNY <sup class="text-xs text-tropical-sunset group-hover:text-white transition-colors">PR</sup></span>
+                    <span class="text-tropical-teal/50 hidden md:inline">|</span>
+                    <span onclick="openArtistModal('rauw')" class="cursor-pointer hover:text-tropical-sand transition-colors group">RAUW ALEJANDRO <sup class="text-xs text-tropical-sunset group-hover:text-white transition-colors">PR</sup></span>
+                    <span class="text-tropical-teal/50 hidden md:inline">|</span>
+                    <span onclick="openArtistModal('myke')" class="cursor-pointer hover:text-tropical-sand transition-colors group">MYKE TOWERS <sup class="text-xs text-tropical-sunset group-hover:text-white transition-colors">PR</sup></span>
+                    <span class="text-tropical-teal/50 hidden md:inline">|</span>
+                    <span onclick="openArtistModal('eladio')" class="cursor-pointer hover:text-tropical-sand transition-colors group">ELADIO CARRIÓN <sup class="text-xs text-tropical-sunset group-hover:text-white transition-colors">US/PR</sup></span>
+                    <span class="text-tropical-teal/50 hidden lg:inline">|</span>
+                    <span onclick="openArtistModal('mora')" class="cursor-pointer hover:text-tropical-sand transition-colors group">MORA <sup class="text-xs text-tropical-sunset group-hover:text-white transition-colors">PR</sup></span>
+                </div>
+            </div>
+
+            <!-- Consagrados y DJs -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 reveal text-center md:text-left bg-tropical-teal/10 p-8 rounded-2xl border border-white/5">
+                <div>
+                    <h3 class="text-tropical-cyan text-sm uppercase tracking-[0.3em] mb-4 font-bold border-b border-tropical-cyan/30 pb-2 flex items-center justify-center md:justify-start gap-2">
+                        <i class="fas fa-star text-xs"></i> La Nueva Ola (COL)
+                    </h3>
+                    <p class="font-display font-bold text-xl leading-loose text-gray-300">
+                        BLESSD • RYAN CASTRO • MANUEL TURIZO • KAPO • PIRLO
+                    </p>
+                </div>
+                <div class="md:text-right">
+                    <h3 class="text-tropical-sand text-sm uppercase tracking-[0.3em] mb-4 font-bold border-b border-tropical-sand/30 pb-2 flex items-center justify-center md:justify-end gap-2 text-right">
+                        <i class="fas fa-headphones text-xs"></i> DJs Escena Urbana
+                    </h3>
+                    <p class="font-display font-bold text-xl leading-loose text-gray-300">
+                        RESIDENTES PERRO NEGRO • CLANDESTINO • Y MÁS...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Escenarios Section (Coachella/Tomorrowland Vibe) -->
+    <section id="escenarios" class="py-24 bg-tropical-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display font-black text-4xl md:text-5xl mb-4 text-white">SANTUARIOS DEL <span class="text-transparent bg-clip-text bg-gradient-water">PERREO</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg italic">"No son solo tarimas; son altares diseñados para comulgar con la naturaleza y el sonido. Arquitectura sagrada entre la arena y el arrecife."</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Stage 1 -->
+                <div class="group relative rounded-2xl overflow-hidden h-96 reveal floating shadow-2xl border border-tropical-cyan/20" style="animation-delay: 0s;">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mainstage" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700 mix-blend-overlay">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tropical-dark via-tropical-dark/70 to-tropical-teal/30 mix-blend-multiply"></div>
+                    <div class="absolute bottom-0 p-8 w-full z-10">
+                        <div class="uppercase text-tropical-cyan text-xs font-bold tracking-[0.2em] mb-2">Stage 1</div>
+                        <h3 class="font-display font-bold text-3xl mb-2 group-hover:text-glow-cyan transition-all text-white">MAIN STAGE - THE CARIBBEAN</h3>
+                        <p class="text-gray-300 text-sm transform translate-y-0 opacity-100 lg:translate-y-8 lg:opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">Escenario principal en terreno habilitado con conexión visual al paisaje costero. Alberga los espectáculos de mayor convocatoria y artistas principales.</p>
+                    </div>
+                </div>
+
+                <!-- Stage 2 -->
+                <div class="group relative rounded-2xl overflow-hidden h-96 reveal floating shadow-2xl border border-tropical-sunset/20" style="animation-delay: 1s;">
+                    <img src="https://images.unsplash.com/photo-1545128485-c400e7702796?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Stage 2" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700 mix-blend-overlay">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tropical-dark via-tropical-dark/70 to-tropical-sunset/30 mix-blend-multiply"></div>
+                    <div class="absolute bottom-0 p-8 w-full z-10">
+                        <div class="uppercase text-tropical-sunset text-xs font-bold tracking-[0.2em] mb-2">Stage 2</div>
+                        <h3 class="font-display font-bold text-3xl mb-2 group-hover:text-glow-sunset transition-all text-white">BEACH STAGE - SUNSET</h3>
+                        <p class="text-gray-300 text-sm transform translate-y-0 opacity-100 lg:translate-y-8 lg:opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">Escenario de playa para DJs, artistas emergentes y sesiones al atardecer. Integrado a la arena con riguroso control de aforo y residuos.</p>
+                    </div>
+                </div>
+
+                <!-- Stage 3 -->
+                <div class="group relative rounded-2xl overflow-hidden h-96 reveal floating shadow-2xl border border-tropical-sand/20" style="animation-delay: 2s;">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Stage 3" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-110 transition-transform duration-700 mix-blend-overlay">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tropical-dark via-tropical-dark/70 to-tropical-sand/30 mix-blend-multiply"></div>
+                    <div class="absolute bottom-0 p-8 w-full z-10">
+                        <div class="uppercase text-tropical-sand text-xs font-bold tracking-[0.2em] mb-2">Stage 3</div>
+                        <h3 class="font-display font-bold text-3xl mb-2 group-hover:text-tropical-sand transition-all text-white">OCEAN STAGE - FLOATING EXPERIENCE</h3>
+                        <p class="text-gray-300 text-sm transform translate-y-0 opacity-100 lg:translate-y-8 lg:opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">Concepto de plataforma flotante o pontón para sesiones de aforo limitado. Operado bajo estrictos estudios de viabilidad marítima y ambiental.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gastronomía y Bebidas Section -->
+    <section id="gastronomia" class="py-24 bg-tropical-dark relative border-t border-white/5">
+        <div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-tropical-sunset/10 via-tropical-dark to-tropical-dark pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display font-black text-4xl md:text-5xl mb-4 text-white">EL RITMO DE LOS <span class="text-transparent bg-clip-text bg-gradient-sunset">SABORES</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg italic">"Para mantener el alma vibrando, el cuerpo necesita ofrendas. Un festín caribeño y andino preparado para los espíritus más exigentes."</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- Gastronomía Colombiana -->
+                <div class="glass-panel p-8 rounded-3xl reveal border border-tropical-sand/30 relative">
+                    <div class="absolute -top-6 -left-6 bg-tropical-dark p-4 rounded-full border border-tropical-sand shadow-lg">
+                        <i class="fas fa-utensils text-2xl text-tropical-sand"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold font-display text-white mb-6 mt-2">El Mapa de Sabores</h3>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4">
+                            <div class="bg-tropical-sunset/20 p-3 rounded-lg text-tropical-sunset"><i class="fas fa-mountain"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">Zona Andina & Paisa</h4>
+                                <p class="text-gray-400 text-sm">Mini bandejas paisas en bowl, ajiaco santafereño street-food, empanadas y arepas de choclo.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="bg-tropical-cyan/20 p-3 rounded-lg text-tropical-cyan"><i class="fas fa-water"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">Costa Caribe & Pacífico</h4>
+                                <p class="text-gray-400 text-sm">El auténtico Rondón isleño, ceviches frescos, encocados y fritos tradicionales de mar.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Oferta de Bebidas -->
+                <div class="glass-panel-sunset p-8 rounded-3xl reveal delay-100 border border-tropical-sunset/30 relative">
+                    <div class="absolute -top-6 -left-6 bg-tropical-dark p-4 rounded-full border border-tropical-sunset shadow-lg">
+                        <i class="fas fa-cocktail text-2xl text-tropical-sunset"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold font-display text-white mb-6 mt-2">Portafolio de Bebidas 360°</h3>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4">
+                            <div class="bg-purple-500/20 p-3 rounded-lg text-purple-400"><i class="fas fa-glass-martini-alt"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">Mixología y Licores</h4>
+                                <p class="text-gray-400 text-sm">Barras premium (Tequila, Whisky, Aguardiente). Coctelería de autor y destilados autóctonos como el viche del Pacífico.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="bg-tropical-leaf/20 p-3 rounded-lg text-tropical-leaf"><i class="fas fa-tint"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">Hidratación Eco-Friendly</h4>
+                                <p class="text-gray-400 text-sm">Mocktails tropicales, cervezas sin alcohol. Dispensadores de agua gratuitos ilimitados con el termo oficial del festival (Cero plástico de un solo uso).</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Boletería Section -->
+    <section id="boleteria" class="py-24 bg-tropical-dark relative border-t border-tropical-cyan/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display font-black text-4xl md:text-5xl mb-4 text-white">TU LLAVE AL <span class="text-transparent bg-clip-text bg-gradient-water">PARAÍSO</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg italic">"Toda historia tiene un inicio. Asegura tu lugar en la leyenda. Elige tu pase y prepárate para cruzar el portal."</p>
+            </div>
+
+            <!-- Pases Diarios -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Day 1 Ticket -->
+                <div class="glass-panel p-6 rounded-2xl reveal flex flex-col hover:border-tropical-sand/50 transition-all hover:-translate-y-2 group">
+                    <div class="text-tropical-sand text-xs font-bold uppercase tracking-widest mb-2">Viernes, 15 Oct</div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-1">Pase Día 1</h3>
+                    <p class="text-gray-400 text-xs mb-4">Welcome to Providencia</p>
+                    <div class="text-4xl font-black text-white mb-6">$145 <span class="text-sm font-normal text-gray-500">USD</span></div>
+                    <ul class="text-sm text-gray-300 space-y-3 mb-8 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tropical-sand"></i> Acceso general Viernes</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tropical-sand"></i> Tributo Reguetón Clásico</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tropical-sand"></i> Transporte Catamarán Básico</li>
+                    </ul>
+                    <button onclick="openPaymentModal('Pase Día 1 (Welcome to Providencia)', '$145 USD')" class="w-full py-3 rounded-lg border border-tropical-sand text-tropical-sand font-bold uppercase text-sm hover:bg-tropical-sand hover:text-tropical-dark transition-colors">
+                        Comprar Día 1
+                    </button>
+                </div>
+
+                <!-- Day 2 Ticket -->
+                <div class="glass-panel p-6 rounded-2xl reveal delay-100 flex flex-col hover:border-tropical-cyan/50 transition-all hover:-translate-y-2 group">
+                    <div class="text-tropical-cyan text-xs font-bold uppercase tracking-widest mb-2">Sábado, 16 Oct</div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-1">Pase Día 2</h3>
+                    <p class="text-gray-400 text-xs mb-4">The Urban Takeover</p>
+                    <div class="text-4xl font-black text-white mb-6">$185 <span class="text-sm font-normal text-gray-500">USD</span></div>
+                    <ul class="text-sm text-gray-300 space-y-3 mb-8 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tropical-cyan"></i> Acceso general Sábado</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tropical-cyan"></i> Headliners Colombianos</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tropical-cyan"></i> Acceso a Playa "Sunset Oasis"</li>
+                    </ul>
+                    <button onclick="openPaymentModal('Pase Día 2 (The Urban Takeover)', '$185 USD')" class="w-full py-3 rounded-lg border border-tropical-cyan text-tropical-cyan font-bold uppercase text-sm hover:bg-tropical-cyan hover:text-tropical-dark transition-colors">
+                        Comprar Día 2
+                    </button>
+                </div>
+
+                <!-- Day 3 Ticket -->
+                <div class="glass-panel p-6 rounded-2xl reveal delay-200 flex flex-col hover:border-tropical-sunset/50 transition-all hover:-translate-y-2 group relative overflow-hidden">
+                    <div class="text-tropical-sunset text-xs font-bold uppercase tracking-widest mb-2">Domingo, 17 Oct</div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-1">Pase Día 3</h3>
+                    <p class="text-gray-400 text-xs mb-4">One Last Paradise</p>
+                    <div class="text-4xl font-black text-white mb-6">$215 <span class="text-sm font-normal text-gray-500">USD</span></div>
+                    <ul class="text-sm text-gray-300 space-y-3 mb-8 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tropical-sunset"></i> Acceso general Domingo</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tropical-sunset"></i> Invitados Int. (Bad Bunny, etc.)</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-tropical-sunset"></i> Show de Drones Clausura</li>
+                    </ul>
+                    <button onclick="openPaymentModal('Pase Día 3 (One Last Paradise)', '$215 USD')" class="w-full py-3 rounded-lg border border-tropical-sunset text-tropical-sunset font-bold uppercase text-sm hover:bg-tropical-sunset hover:text-white transition-colors">
+                        Comprar Día 3
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pases 3 Días (VIP & Premium) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 3 Day VIP Pass -->
+                <div class="bg-gradient-to-b from-tropical-dark to-black p-6 rounded-2xl reveal delay-300 flex flex-col border border-tropical-cyan/50 shadow-lg hover:shadow-[0_0_20px_rgba(0,243,255,0.2)] transition-all hover:-translate-y-2 relative">
+                    <div class="text-tropical-cyan text-xs font-bold uppercase tracking-widest mb-2 mt-2">Fin de Semana Completo</div>
+                    <h3 class="font-display font-black text-3xl text-white mb-1">FULL PASS VIP</h3>
+                    <p class="text-gray-400 text-xs mb-4">Sólo Accesos al Festival (3 Días)</p>
+                    <div class="text-5xl font-black text-white mb-6">$480 <span class="text-sm font-normal text-gray-400">USD</span></div>
+                    <ul class="text-sm text-gray-200 space-y-3 mb-8 flex-grow font-medium">
+                        <li class="flex items-center gap-2"><i class="fas fa-star text-tropical-cyan"></i> Acceso Total (Viernes a Domingo)</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-bolt text-tropical-cyan"></i> Fast Pass (Sin filas en barras)</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-eye text-tropical-cyan"></i> Plataformas de visualización elevadas</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-tshirt text-tropical-cyan"></i> Kit Merch Exclusivo</li>
+                    </ul>
+                    <button onclick="openPaymentModal('FULL PASS VIP (3 Días)', '$480 USD')" class="w-full py-4 rounded-xl border-2 border-tropical-cyan text-tropical-cyan font-black uppercase text-sm hover:bg-tropical-cyan hover:text-tropical-dark transition-colors">
+                        Adquirir VIP Pass
+                    </button>
+                </div>
+
+                <!-- 3 Day PREMIUM (Flights Included) -->
+                <div class="bg-gradient-to-b from-tropical-sunset/30 to-tropical-dark p-6 rounded-2xl reveal delay-400 flex flex-col border-2 border-tropical-sunset shadow-[0_0_30px_rgba(255,94,98,0.3)] hover:shadow-[0_0_50px_rgba(255,94,98,0.5)] transition-all hover:-translate-y-2 relative overflow-hidden">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-sunset text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap z-10 shadow-lg">
+                        La Experiencia Definitiva
+                    </div>
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-tropical-sunset/20 rounded-full blur-[50px]"></div>
+                    <div class="text-white text-xs font-bold uppercase tracking-widest mb-2 mt-2 z-10">Todo Incluido</div>
+                    <h3 class="font-display font-black text-3xl text-transparent bg-clip-text bg-gradient-sunset mb-1 z-10">PREMIUM PASS</h3>
+                    <p class="text-gray-300 text-xs mb-4 z-10">3 Días + Vuelos Chárter + Alojamiento en Crucero</p>
+                    <div class="text-5xl font-black text-white mb-6 z-10">$1,450 <span class="text-sm font-normal text-gray-400">USD</span></div>
+                    <ul class="text-sm text-gray-200 space-y-3 mb-8 flex-grow font-medium z-10">
+                        <li class="flex items-center gap-2"><i class="fas fa-plane-departure text-tropical-sunset"></i> Vuelos Chárter (BOG/MED/CLO - ADZ)</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-ship text-tropical-sunset"></i> Catamarán Party Boat (ADZ - PVA)</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-bed text-tropical-sunset"></i> 4 Noches en Crucero Flotante VIP</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-crown text-tropical-sunset"></i> Acceso Backstage & All-Access Festival</li>
+                    </ul>
+                    <button onclick="openPaymentModal('PREMIUM PASS (Todo Incluido)', '$1,450 USD')" class="w-full py-4 rounded-xl bg-gradient-sunset text-white font-black uppercase text-sm shadow-lg hover:opacity-90 transition-opacity z-10">
+                        Reservar Premium
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modelo Canvas & Viabilidad Section -->
+    <section id="modelo" class="py-24 bg-tropical-dark relative border-t border-tropical-sand/20">
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-tropical-teal/10 via-tropical-dark to-tropical-dark pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="bg-tropical-cyan/20 text-tropical-cyan px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest border border-tropical-cyan/50">Business Plan</span>
+                <h2 class="font-display font-black text-4xl md:text-5xl mt-6 mb-4 text-white">MODELO <span class="text-transparent bg-clip-text bg-gradient-water">CANVAS</span></h2>
+                <p class="text-gray-300 max-w-3xl mx-auto text-lg mb-2">Haz clic en cada componente para leer la estructuración empresarial basada en el documento oficial.</p>
+                <p class="text-tropical-sand text-xs uppercase tracking-widest font-bold animate-pulse">Touch para expandir</p>
+            </div>
+
+            <!-- Canvas Grid (9 Blocks based on PDF) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+                
+                <div onclick="openCanvasModal('1')" class="glass-panel p-6 rounded-2xl reveal cursor-pointer hover:bg-tropical-teal/30 transition-all border-l-4 border-l-tropical-cyan group">
+                    <h3 class="text-white font-bold mb-2 uppercase text-sm group-hover:text-tropical-cyan transition-colors"><span class="text-tropical-cyan mr-1">1.</span> Propuesta de Valor</h3>
+                    <p class="text-gray-400 text-xs line-clamp-2">Festival internacional de reguetón de tres dias en el Caribe colombiano...</p>
+                </div>
+
+                <div onclick="openCanvasModal('2')" class="glass-panel p-6 rounded-2xl reveal delay-75 cursor-pointer hover:bg-tropical-teal/30 transition-all border-l-4 border-l-tropical-sand group">
+                    <h3 class="text-white font-bold mb-2 uppercase text-sm group-hover:text-tropical-sand transition-colors"><span class="text-tropical-sand mr-1">2.</span> Segmentos de Clientes</h3>
+                    <p class="text-gray-400 text-xs line-clamp-2">Público colombiano; visitantes de Latinoamérica y otros mercados...</p>
+                </div>
+
+                <div onclick="openCanvasModal('3')" class="glass-panel p-6 rounded-2xl reveal delay-100 cursor-pointer hover:bg-tropical-teal/30 transition-all border-l-4 border-l-tropical-sunset group">
+                    <h3 class="text-white font-bold mb-2 uppercase text-sm group-hover:text-tropical-sunset transition-colors"><span class="text-tropical-sunset mr-1">3.</span> Canales</h3>
+                    <p class="text-gray-400 text-xs line-clamp-2">Sitio web oficial y boletería digital; Instagram, TikTok, YouTube...</p>
+                </div>
+
+                <div onclick="openCanvasModal('4')" class="glass-panel p-6 rounded-2xl reveal cursor-pointer hover:bg-tropical-teal/30 transition-all border-l-4 border-l-green-400 group">
+                    <h3 class="text-white font-bold mb-2 uppercase text-sm group-hover:text-green-400 transition-colors"><span class="text-green-400 mr-1">4.</span> Relación con Clientes</h3>
+                    <p class="text-gray-400 text-xs line-clamp-2">Comunidad digital del festival; preventas y beneficios por compra anticipada...</p>
+                </div>
+
+                <div onclick="openCanvasModal('5')" class="glass-panel p-6 rounded-2xl reveal delay-75 cursor-pointer hover:bg-tropical-teal/30 transition-all border-l-4 border-l-purple-400 group">
+                    <h3 class="text-white font-bold mb-2 uppercase text-sm group-hover:text-purple-400 transition-colors"><span class="text-purple-400 mr-1">5.</span> Fuentes de Ingresos</h3>
+                    <p class="text-gray-400 text-xs line-clamp-2">Abonos de tres días y entradas por jornada; entradas VIP; patrocinios...</p>
+                </div>
+
+                <div onclick="openCanvasModal('6')" class="glass-panel p-6 rounded-2xl reveal delay-100 cursor-pointer hover:bg-tropical-teal/30 transition-all border-l-4 border-l-tropical-cyan group">
+                    <h3 class="text-white font-bold mb-2 uppercase text-sm group-hover:text-tropical-cyan transition-colors"><span class="text-tropical-cyan mr-1">6.</span> Recursos Clave</h3>
+                    <p class="text-gray-400 text-xs line-clamp-2">Marca y propiedad intelectual; contratos y derechos de artistas; espacios...</p>
+                </div>
+
+                <div onclick="openCanvasModal('7')" class="glass-panel p-6 rounded-2xl reveal cursor-pointer hover:bg-tropical-teal/30 transition-all border-l-4 border-l-tropical-sand group">
+                    <h3 class="text-white font-bold mb-2 uppercase text-sm group-hover:text-tropical-sand transition-colors"><span class="text-tropical-sand mr-1">7.</span> Actividades Clave</h3>
+                    <p class="text-gray-400 text-xs line-clamp-2">Planeación y producción; contratación de artistas; diseño y montaje...</p>
+                </div>
+
+                <div onclick="openCanvasModal('8')" class="glass-panel p-6 rounded-2xl reveal delay-75 cursor-pointer hover:bg-tropical-teal/30 transition-all border-l-4 border-l-tropical-sunset group">
+                    <h3 class="text-white font-bold mb-2 uppercase text-sm group-hover:text-tropical-sunset transition-colors"><span class="text-tropical-sunset mr-1">8.</span> Socios Clave</h3>
+                    <p class="text-gray-400 text-xs line-clamp-2">Comunidad raizal y organizaciones locales; autoridades competentes...</p>
+                </div>
+
+                <div onclick="openCanvasModal('9')" class="glass-panel p-6 rounded-2xl reveal delay-100 cursor-pointer hover:bg-tropical-teal/30 transition-all border-l-4 border-l-green-400 group">
+                    <h3 class="text-white font-bold mb-2 uppercase text-sm group-hover:text-green-400 transition-colors"><span class="text-green-400 mr-1">9.</span> Estructura de Costos</h3>
+                    <p class="text-gray-400 text-xs line-clamp-2">Artistas y producción; transporte de artistas, personal y equipos...</p>
+                </div>
+            </div>
+            
+            <!-- Viabilidad Alert Box -->
+            <div class="bg-yellow-900/20 border border-yellow-500/30 p-6 rounded-2xl reveal text-center max-w-4xl mx-auto">
+                <i class="fas fa-exclamation-triangle text-yellow-500 mb-3 text-2xl"></i>
+                <h4 class="text-yellow-500 font-bold uppercase tracking-widest text-sm mb-2">Condición Crítica de Viabilidad</h4>
+                <p class="text-gray-400 text-sm">La escala del festival requiere comprobar la capacidad de carga turística y operativa. El festival debe diseñarse desde el principio para evitar afectaciones a ecosistemas sensibles y respetar las normas del territorio y la comunidad raizal.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketing Strategy & Funnel Expansion -->
+    <section id="marketing" class="py-24 bg-gradient-to-b from-tropical-teal to-tropical-dark relative border-t border-tropical-cyan/20">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="bg-tropical-sunset/20 text-tropical-sand px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest border border-tropical-sunset/50">Plan Maestro</span>
+                <h2 class="font-display font-black text-4xl md:text-5xl mt-6 mb-4 text-white">ESTRATEGIA DE <span class="text-transparent bg-clip-text bg-gradient-sunset">MARKETING</span></h2>
+                <p class="text-white/80 max-w-3xl mx-auto text-lg">Un ecosistema diseñado en tres fases para generar hype masivo, amplificar la experiencia y lograr retención de la audiencia.</p>
+            </div>
+
+            <!-- Marketing Phases Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Fase 1: Expectativa -->
+                <div class="glass-panel p-8 rounded-2xl relative overflow-hidden group hover:border-tropical-sunset/50 transition-colors reveal">
+                    <div class="absolute top-0 right-0 bg-tropical-sunset text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Fase 1</div>
+                    <h3 class="text-2xl font-bold font-display text-white mb-4 flex items-center gap-3">
+                        <i class="fas fa-eye text-tropical-sunset"></i> Expectativa (Pre)
+                    </h3>
+                    <p class="text-gray-300 text-sm mb-4">Lanzamiento táctico con influenciadores y embudos automatizados.</p>
+                    <ul class="text-sm text-gray-400 space-y-3">
+                        <li><i class="fab fa-whatsapp text-tropical-cyan mr-2"></i> <strong>Embudos de WhatsApp:</strong> Automatización para captar leads, perfilar al usuario y vender boletería VIP de forma directa.</li>
+                        <li><i class="fas fa-bullhorn text-tropical-cyan mr-2"></i> <strong>Meta Ads & Emailing:</strong> Pauta de expectativa, captación y secuencias de calentamiento hacia el evento.</li>
+                        <li><i class="fas fa-leaf text-tropical-cyan mr-2"></i> <strong>Contenido Orgánico:</strong> "Unboxing" de la Caja de Supervivencia por parte de influencers y teasers virales en redes.</li>
+                    </ul>
+                </div>
+
+                <!-- Fase 2: Durante el Evento -->
+                <div class="glass-panel p-8 rounded-2xl relative overflow-hidden group hover:border-tropical-cyan/50 transition-colors reveal delay-100">
+                    <div class="absolute top-0 right-0 bg-tropical-cyan text-tropical-dark text-xs font-bold px-3 py-1 rounded-bl-lg">Fase 2</div>
+                    <h3 class="text-2xl font-bold font-display text-white mb-4 flex items-center gap-3">
+                        <i class="fas fa-broadcast-tower text-tropical-cyan"></i> Generación FOMO (Durante)
+                    </h3>
+                    <p class="text-gray-300 text-sm mb-4">Estrategia 100% orgánica. Amplificar la experiencia en tiempo real a través de los asistentes y creadores.</p>
+                    <ul class="text-sm text-gray-400 space-y-3">
+                        <li><i class="fas fa-mobile-alt text-tropical-sand mr-2"></i> <strong>Takeovers Orgánicos:</strong> Creadores de contenido documentando el lifestyle desde los cruceros y el backstage.</li>
+                        <li><i class="fab fa-tiktok text-tropical-sand mr-2"></i> <strong>Viralidad en Tiempo Real:</strong> Trends y audios nativos en TikTok capturando la euforia de los escenarios.</li>
+                        <li><i class="fab fa-instagram text-tropical-sand mr-2"></i> <strong>Stories & FOMO:</strong> Transmisiones en vivo orgánicas desde la cuenta oficial para hacer sentir a todos lo que se pierden.</li>
+                    </ul>
+                </div>
+
+                <!-- Fase 3: Pos-Evento -->
+                <div class="glass-panel p-8 rounded-2xl relative overflow-hidden group hover:border-green-400/50 transition-colors reveal delay-200">
+                    <div class="absolute top-0 right-0 bg-green-400 text-tropical-dark text-xs font-bold px-3 py-1 rounded-bl-lg">Fase 3</div>
+                    <h3 class="text-2xl font-bold font-display text-white mb-4 flex items-center gap-3">
+                        <i class="fas fa-heart text-green-400"></i> Fidelización (Pos)
+                    </h3>
+                    <p class="text-gray-300 text-sm mb-4">Retención de los asistentes y monetización temprana del festival del año siguiente.</p>
+                    <ul class="text-sm text-gray-400 space-y-3">
+                        <li><i class="fas fa-share-nodes text-green-400 mr-2"></i> <strong>UGC Orgánico:</strong> Reposteo masivo de los mejores videos creados por los asistentes para mantener la conversación viva.</li>
+                        <li><i class="fas fa-sync text-green-400 mr-2"></i> <strong>Meta Ads (Retargeting):</strong> Promoción del "Aftermovie" oficial orientada a asistentes y públicos lookalike.</li>
+                        <li><i class="fas fa-envelope-open-text text-green-400 mr-2"></i> <strong>Emailing & Blind Tickets:</strong> Encuestas de satisfacción y venta anticipada a ciegas (2028) para la comunidad.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Ecosistema Digital y Contenido -->
+            <div class="glass-panel p-8 rounded-2xl reveal mb-12 border-t-4 border-t-tropical-sand relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 opacity-5 text-[15rem] text-tropical-sand"><i class="fas fa-mobile-alt"></i></div>
+                <h3 class="text-2xl font-bold font-display text-white mb-6 flex items-center gap-3 relative z-10">
+                    <i class="fas fa-share-alt text-tropical-sand"></i> Ecosistema de Redes & Pilares de Contenido
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                    <div class="space-y-4">
+                        <h4 class="text-tropical-sand font-bold uppercase text-xs tracking-widest border-b border-tropical-sand/30 pb-2">Plataformas Clave</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <div class="bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center shrink-0"><i class="fab fa-instagram"></i></div>
+                                <div>
+                                    <strong class="text-white text-sm">Instagram (Estética & FOMO):</strong> 
+                                    <p class="text-xs text-gray-400">El canal principal. Reels con renders 3D del escenario sobre el agua, carruseles de <i>outfit inspiration</i> y anuncios de lineup. Modo visual impecable.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="bg-black border border-gray-600 text-white w-8 h-8 rounded-full flex items-center justify-center shrink-0"><i class="fab fa-tiktok"></i></div>
+                                <div>
+                                    <strong class="text-white text-sm">TikTok (Viralidad & Comunidad):</strong> 
+                                    <p class="text-xs text-gray-400">Tendencias con audios de Feid y Bad Bunny. Vlogs "Behind the scenes" construyendo el festival y dinámicas de interacción con fans.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="bg-blue-400 text-white w-8 h-8 rounded-full flex items-center justify-center shrink-0"><i class="fab fa-twitter"></i></div>
+                                <div>
+                                    <strong class="text-white text-sm">X / Twitter (Hype & Servicio):</strong> 
+                                    <p class="text-xs text-gray-400">Conversación en tiempo real. Hilos de pistas sobre los artistas sorpresa y atención al cliente rápida para dudas de logística.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <h4 class="text-tropical-sand font-bold uppercase text-xs tracking-widest border-b border-tropical-sand/30 pb-2">Sugerencias de Contenido (Grilla)</h4>
+                        <div class="bg-black/30 p-4 rounded-xl border border-white/5 space-y-3">
+                            <div>
+                                <span class="text-tropical-cyan text-xs font-bold uppercase block mb-1">Teaser: "El Mito de la Isla"</span>
+                                <p class="text-xs text-gray-300">Video narrado estilo documental corto mostrando la belleza virgen de Providencia y terminando con un beat de reguetón pesado y luces neón reflejándose en el agua.</p>
+                            </div>
+                            <div>
+                                <span class="text-tropical-sunset text-xs font-bold uppercase block mb-1">Guía de Supervivencia VIP</span>
+                                <p class="text-xs text-gray-300">Infografías animadas explicando cómo funcionará la logística de dormir en los cruceros y los traslados en el Catamarán Party Boat.</p>
+                            </div>
+                            <div>
+                                <span class="text-green-400 text-xs font-bold uppercase block mb-1">Lineup Drop: Animación CGI</span>
+                                <p class="text-xs text-gray-300">En lugar del típico póster aburrido, publicamos un video de hologramas gigantes de los artistas proyectándose sobre el "Puente de los Enamorados" en Providencia.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 reveal">
+                <button onclick="openWaitlistModal()" class="px-8 py-4 bg-gradient-sunset text-white uppercase font-bold tracking-widest rounded-full hover:shadow-[0_0_20px_rgba(255,94,98,0.6)] transition-all transform hover:-translate-y-1">
+                    Simular Ingreso al Embudo VIP
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-white/5 text-center text-gray-500 text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="font-display font-black text-2xl tracking-widest text-white mb-6">MAR DE <span class="text-transparent bg-clip-text bg-gradient-sunset">PERREO</span></h2>
+            <div class="flex justify-center gap-6 mb-8 text-xl">
+                <a href="#" class="hover:text-tropical-sunset transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-tropical-cyan transition-colors"><i class="fab fa-tiktok"></i></a>
+                <a href="#" class="hover:text-tropical-leaf transition-colors"><i class="fab fa-spotify"></i></a>
+            </div>
+            <p>© 2027 Proyecto Festival Musical Providencia. Todos los derechos reservados.</p>
+            <p class="mt-2 text-xs opacity-50">Pitch Deck interactivo para revisión estratégica. Modo: Caribe Sunset.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+
+    <!-- Payment Gateway Modal -->
+    <div id="paymentModal" class="fixed inset-0 z-[130] flex items-center justify-center hidden opacity-0 transition-opacity duration-300 p-4">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closePaymentModal()"></div>
+        <div class="glass-panel relative w-full max-w-4xl rounded-3xl border border-tropical-cyan/30 transform scale-95 transition-transform duration-300 shadow-2xl flex flex-col md:flex-row overflow-hidden bg-tropical-dark/90" id="paymentModalContent">
+            
+            <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white bg-black/50 rounded-full w-8 h-8 flex items-center justify-center z-20">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+
+            <!-- Order Summary (Left) -->
+            <div class="w-full md:w-1/2 p-8 bg-black/50 border-b md:border-b-0 md:border-r border-white/10 flex flex-col justify-between">
+                <div>
+                    <span class="text-tropical-cyan text-xs font-bold uppercase tracking-widest block mb-2"><i class="fas fa-lock mr-1"></i> Checkout Seguro</span>
+                    <h3 class="font-display font-black text-3xl text-white mb-6">Tu Pedido</h3>
+                    
+                    <div class="bg-tropical-teal/20 border border-tropical-cyan/20 rounded-xl p-5 mb-6">
+                        <p class="text-gray-400 text-xs uppercase tracking-widest mb-1">Ticket Seleccionado</p>
+                        <p class="text-white font-bold text-lg leading-tight mb-2" id="checkoutTicketName">Pase Seleccionado</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-white/10 mt-4">
+                            <span class="text-gray-300">Total a Pagar</span>
+                            <span class="text-2xl font-black text-tropical-sand" id="checkoutTicketPrice">$0 USD</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 hidden md:block">
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        <i class="fas fa-shield-alt text-tropical-leaf mr-1"></i> 
+                        Todas las transacciones están encriptadas. Al proceder, aceptas los términos de admisión del festival y la política de cero plásticos.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Payment Form (Right) -->
+            <div class="w-full md:w-1/2 p-8 relative">
+                <form id="paymentForm" onsubmit="handlePaymentSubmit(event)">
+                    <h4 class="text-white font-bold mb-6 text-lg">Información de Pago</h4>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Correo Electrónico</label>
+                            <input type="email" required placeholder="tu@email.com" class="w-full bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-tropical-cyan focus:ring-1 focus:ring-tropical-cyan transition-colors">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Número de Tarjeta</label>
+                            <div class="relative">
+                                <input type="text" required placeholder="0000 0000 0000 0000" maxlength="19" class="w-full bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-tropical-cyan focus:ring-1 focus:ring-tropical-cyan transition-colors pl-12">
+                                <i class="far fa-credit-card absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-1/2">
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Vencimiento</label>
+                                <input type="text" required placeholder="MM/AA" maxlength="5" class="w-full bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-tropical-cyan focus:ring-1 focus:ring-tropical-cyan transition-colors text-center">
+                            </div>
+                            <div class="w-1/2">
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">CVC</label>
+                                <input type="password" required placeholder="***" maxlength="4" class="w-full bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-tropical-cyan focus:ring-1 focus:ring-tropical-cyan transition-colors text-center">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Nombre en la tarjeta</label>
+                            <input type="text" required placeholder="Como aparece en la tarjeta" class="w-full bg-black/50 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-tropical-cyan focus:ring-1 focus:ring-tropical-cyan transition-colors">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnPay" class="w-full bg-gradient-to-r from-tropical-cyan to-blue-500 text-tropical-dark font-black py-4 rounded-lg uppercase tracking-widest hover:opacity-90 transition-opacity mt-8 shadow-[0_0_15px_rgba(0,243,255,0.4)]">
+                        Procesar Pago Seguro
+                    </button>
+                </form>
+
+                <!-- Success Message Overlay -->
+                <div id="paymentSuccess" class="absolute inset-0 bg-tropical-dark/95 backdrop-blur-sm hidden flex-col items-center justify-center p-8 text-center z-10">
+                    <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(34,197,94,0.5)]">
+                        <i class="fas fa-check text-4xl text-white"></i>
+                    </div>
+                    <h3 class="font-display font-black text-3xl text-white mb-2">¡Eres parte de la Leyenda!</h3>
+                    <p class="text-gray-300 text-sm mb-6">Tu pago ha sido procesado con éxito. Las entradas y el recibo han sido enviados a tu correo. Prepárate para el Mar de Perreo.</p>
+                    <button onclick="closePaymentModal()" class="px-8 py-3 rounded-full border border-white/20 text-white hover:bg-white/10 transition-colors uppercase text-xs font-bold tracking-widest">
+                        Volver al Festival
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas Info Modal -->
+    <div id="canvasModal" class="fixed inset-0 z-[120] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCanvasModal()"></div>
+        <div class="glass-panel relative w-full max-w-xl p-8 rounded-3xl border border-tropical-cyan/50 transform scale-95 transition-transform duration-300 mx-4" id="canvasModalContent">
+            <button onclick="closeCanvasModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white bg-black/50 rounded-full w-8 h-8 flex items-center justify-center">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+            <h3 class="font-display font-black text-2xl text-tropical-cyan mb-4" id="canvasModalTitle">Título</h3>
+            <div class="bg-black/40 p-6 rounded-xl border border-white/10">
+                <p class="text-gray-200 text-base leading-relaxed" id="canvasModalText">Texto descriptivo del bloque.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Waitlist Modal (Simulating WhatsApp Funnel Entry) -->
+    <div id="waitlistModal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeWaitlistModal()"></div>
+        <div class="glass-panel relative w-full max-w-md p-8 rounded-3xl border border-tropical-sunset/30 transform scale-95 transition-transform duration-300 mx-4" id="waitlistModalContent">
+            <button onclick="closeWaitlistModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white bg-black/50 rounded-full w-8 h-8 flex items-center justify-center">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <h3 class="font-display font-black text-2xl text-white mb-2">ÚNETE A LA <span class="text-tropical-sunset">LISTA</span></h3>
+                <p class="text-gray-300 text-sm">Selecciona tu perfil para ingresar al embudo exclusivo de boletería anticipada vía WhatsApp.</p>
+            </div>
+
+            <form onsubmit="handleFormSubmit(event)" class="space-y-4" id="waitlistForm">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Nombre</label>
+                    <input type="text" required class="w-full bg-tropical-dark border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-tropical-sunset focus:ring-1 focus:ring-tropical-sunset transition-colors">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">WhatsApp</label>
+                    <input type="tel" required placeholder="+57 ..." class="w-full bg-tropical-dark border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-tropical-sunset focus:ring-1 focus:ring-tropical-sunset transition-colors">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">¿Qué experiencia buscas?</label>
+                    <select class="w-full bg-tropical-dark border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-tropical-sunset focus:ring-1 focus:ring-tropical-sunset transition-colors appearance-none">
+                        <option>Paquete VIP (Vuelo + Crucero)</option>
+                        <option>Pase 3 Días (Festival Only)</option>
+                        <option>Turismo Internacional Extend</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-sunset text-white font-bold py-4 rounded-lg uppercase tracking-widest hover:opacity-90 transition-opacity mt-4 shadow-[0_0_15px_rgba(255,94,98,0.3)]">
+                    Entrar a la Lista
+                </button>
+            </form>
+            
+            <div id="successMsg" class="hidden text-center mt-6 p-6 bg-green-900/40 border border-green-500/50 rounded-xl text-green-400">
+                <i class="fab fa-whatsapp mb-3 text-4xl"></i>
+                <p class="text-lg font-bold text-white mb-1">¡Registro Exitoso!</p>
+                <p class="text-sm mt-1 text-gray-300">Revisa tu WhatsApp. Nuestro bot interactivo acaba de enviarte el primer acertijo para liberar tu acceso.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Festival Radio -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div id="radioPlayer" class="hidden mb-4 bg-black/80 backdrop-blur-md p-2 rounded-2xl border border-tropical-sunset/30 shadow-2xl transition-all duration-300 transform scale-95 origin-bottom-right">
+            <div class="flex justify-between items-center px-2 mb-2">
+                <span class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2"><i class="fas fa-broadcast-tower text-tropical-sunset"></i> Radio Festival</span>
+                <button onclick="toggleRadio()" class="text-gray-400 hover:text-white transition-colors"><i class="fas fa-times"></i></button>
+            </div>
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWY7IeIP1cdjF?utm_source=generator&theme=0" width="250" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <button id="radioToggle" onclick="toggleRadio()" class="bg-gradient-sunset text-white p-4 rounded-full shadow-[0_0_20px_rgba(255,94,98,0.5)] hover:scale-110 hover:shadow-[0_0_30px_rgba(255,94,98,0.8)] transition-all flex items-center justify-center group relative">
+            <div class="absolute inset-0 rounded-full border-2 border-white/50 animate-ping opacity-75"></div>
+            <i class="fas fa-music text-xl group-hover:animate-bounce relative z-10"></i>
+        </button>
+    </div>
+
+    <!-- Artist Bio Modal -->
+    <div id="artistModal" class="fixed inset-0 z-[110] flex items-center justify-center hidden opacity-0 transition-opacity duration-300 overflow-y-auto p-4">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-lg min-h-screen" onclick="closeArtistModal()"></div>
+        <div class="bg-gradient-to-br from-tropical-dark to-black relative w-full max-w-lg p-0 rounded-3xl border border-white/10 transform scale-95 transition-transform duration-300 mx-auto my-8 shadow-2xl z-10 max-h-[90vh] flex flex-col" id="artistModalContent">
+            
+            <div class="absolute top-0 left-0 w-full h-32 bg-gradient-water opacity-20 shrink-0 rounded-t-3xl" id="artistModalHeaderBg"></div>
+            
+            <button onclick="closeArtistModal()" class="absolute top-4 right-4 text-white hover:text-tropical-sunset z-20 bg-black/40 backdrop-blur-md rounded-full w-10 h-10 flex items-center justify-center border border-white/10 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="p-6 md:p-8 relative z-10 text-center mt-4 overflow-y-auto flex-grow custom-scrollbar">
+                <!-- Foto del Artista -->
+                <div class="flex justify-center mb-4 relative">
+                    <div class="absolute inset-0 bg-gradient-water blur-xl opacity-30 rounded-full scale-110" id="artistModalGlow"></div>
+                    <img id="artistModalImage" src="" alt="Artista" class="w-32 h-32 rounded-full object-cover border-4 border-white/20 shadow-2xl relative z-10" onerror="this.src='https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80'">
+                </div>
+                
+                <h3 class="font-display font-black text-4xl text-white mb-1" id="artistName">Nombre del Artista</h3>
+                <p class="text-tropical-cyan font-bold tracking-widest uppercase text-xs mb-6" id="artistTag">Headliner</p>
+                
+                <div class="bg-white/5 rounded-2xl p-6 border border-white/5 text-left mb-4">
+                    <h4 class="text-white font-bold mb-2 flex items-center gap-2"><i class="fas fa-book-open text-tropical-sunset text-sm"></i> Biografía y Concepto</h4>
+                    <p class="text-gray-300 text-sm leading-relaxed" id="artistBio">
+                        Biografía del artista.
+                    </p>
+                </div>
+
+                <div class="bg-tropical-teal/30 rounded-2xl p-6 border border-tropical-cyan/20 text-left mb-6">
+                    <h4 class="text-white font-bold mb-2 flex items-center gap-2"><i class="fas fa-bolt text-tropical-sand text-sm"></i> Impacto en el Festival</h4>
+                    <p class="text-gray-300 text-sm leading-relaxed" id="artistImpact">
+                        Por qué este artista es crucial para el Line Up.
+                    </p>
+                </div>
+
+                <!-- Spotify Embed Player -->
+                <div class="rounded-xl overflow-hidden shadow-xl border border-white/10" id="spotifyPlayerContainer">
+                    <iframe id="spotifyIframe" style="border-radius:12px" src="" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic -->
+    <script>
+        // --- Countdown Timer Logic ---
+        const countDownDate = new Date("Oct 15, 2027 16:00:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("days").innerHTML = "00";
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+            }
+        }, 1000);
+
+        // --- Scroll Reveal Animation ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger once on load
+
+        // --- Navbar Scroll Effect ---
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg', 'border-b', 'border-white/10');
+                navbar.style.background = 'rgba(1, 28, 39, 0.95)';
+            } else {
+                navbar.classList.remove('shadow-lg', 'border-b', 'border-white/10');
+                navbar.style.background = 'transparent';
+            }
+        });
+
+        // --- Waitlist Modal Logic ---
+        const waitlistModal = document.getElementById('waitlistModal');
+        const waitlistModalContent = document.getElementById('waitlistModalContent');
+        const successMsg = document.getElementById('successMsg');
+        const waitlistForm = document.getElementById('waitlistForm');
+
+        function openModal() { openWaitlistModal(); } // Redirect for nav button
+        
+        function openWaitlistModal() {
+            waitlistModal.classList.remove('hidden');
+            setTimeout(() => {
+                waitlistModal.classList.remove('opacity-0');
+                waitlistModalContent.classList.remove('scale-95');
+                waitlistModalContent.classList.add('scale-100');
+            }, 10);
+            
+            waitlistForm.style.display = 'block';
+            successMsg.classList.add('hidden');
+            waitlistForm.reset();
+        }
+
+        function closeWaitlistModal() {
+            waitlistModal.classList.add('opacity-0');
+            waitlistModalContent.classList.remove('scale-100');
+            waitlistModalContent.classList.add('scale-95');
+            setTimeout(() => {
+                waitlistModal.classList.add('hidden');
+            }, 300);
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando Link de WhatsApp...';
+            
+            setTimeout(() => {
+                waitlistForm.style.display = 'none';
+                successMsg.classList.remove('hidden');
+                btn.innerHTML = originalText;
+            }, 1500);
+        }
+
+        // --- Artist Modal Logic & Data ---
+        const artistsData = {
+            'feid': {
+                name: 'FEID',
+                tag: 'Headliner Colombia • El Ferxxo',
+                headerClass: 'from-green-500 to-green-900',
+                bio: 'Líder absoluto de la nueva ola del sonido de Medellín. Ha construido un universo visual y sonoro (dominado por el color verde) que resuena profundamente con la Gen-Z a nivel global.',
+                impact: 'Garantiza el "Sold Out" del público joven (Trendsetters). Su show aporta un nivel de producción visual y energía que dominará el Mainstage la noche del Hype Nacional.',
+                spotifyId: '2NnJpRXIlx35CS3hlBiWeL', // Classy 101
+                imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Feid_en_2023.jpg/800px-Feid_en_2023.jpg'
+            },
+            'karolg': {
+                name: 'KAROL G',
+                tag: 'Headliner Colombia • La Bichota',
+                headerClass: 'from-pink-500 to-pink-900',
+                bio: 'La máxima exponente femenina del género urbano a nivel mundial. Rompedora de récords en Billboard y la primera latina en hacer giras de estadios globales completamente agotadas.',
+                impact: 'Aporta el peso de una superestrella global. Atrae al público aspiracional y turístico internacional, elevando el festival al estatus de mega-evento imperdible.',
+                spotifyId: '7iQXYTyuG13aoeHxGG28Nh', // PROVENZA
+                imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Karol_G_2021.jpg/800px-Karol_G_2021.jpg'
+            },
+            'jbalvin': {
+                name: 'J BALVIN',
+                tag: 'Headliner Colombia • El Negrito de Medellín',
+                headerClass: 'from-yellow-400 to-orange-600',
+                bio: 'Pionero de la globalización del reguetón. Responsable de llevar la cultura urbana colombiana a las pasarelas de alta costura, Coachella y al mainstream anglosajón.',
+                impact: 'Trae la nostalgia de la "época dorada" y los himnos universales del reguetón, conectando con el público de 25-35 años (VIP Aspiracional).',
+                spotifyId: '2up3OPMp9Tb4dAKM2erWXQ', // Mi Gente
+                imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/J_Balvin_2019.png/800px-J_Balvin_2019.png'
+            },
+            'maluma': {
+                name: 'MALUMA',
+                tag: 'Headliner Colombia • Don Juan',
+                headerClass: 'from-purple-500 to-purple-900',
+                bio: 'Ícono del pop urbano y la moda. Su evolución musical abarca desde el reguetón puro hasta fusiones tropicales, salsas y baladas rítmicas.',
+                impact: 'Su presencia garantiza un show de altísimo nivel escénico y coreográfico, atrayendo a una demografía muy amplia y fortaleciendo el atractivo VIP del evento.',
+                spotifyId: '1yoMvmasuxZfqHEipJhRbp', // Hawái
+                imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Maluma_en_2018.jpg/800px-Maluma_en_2018.jpg'
+            },
+            'badbunny': {
+                name: 'BAD BUNNY',
+                tag: 'Global Guest • PR',
+                headerClass: 'from-tropical-sand to-tropical-sunset',
+                bio: 'El artista más escuchado del mundo durante múltiples años consecutivos. Ha redefinido las reglas de la industria musical, fusionando trap, reguetón, mambo y synth-pop.',
+                impact: 'Es el "Santo Grial" del Line Up. Su participación en el Día 3 (Clausura Global) es el gancho definitivo para atraer vuelos chárter y turistas de todo el continente americano.',
+                spotifyId: '6Sq7ltF9Qa7SNFBsV5Cogx', // Me Porto Bonito
+                imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Bad_Bunny_2019.jpg/800px-Bad_Bunny_2019.jpg'
+            },
+            'rauw': {
+                name: 'RAUW ALEJANDRO',
+                tag: 'Global Guest • PR',
+                headerClass: 'from-tropical-cyan to-blue-600',
+                bio: 'El rey del reguetón coreográfico y las fusiones electrónicas/synth-wave. Combina habilidades de baile del más alto nivel con hits globales.',
+                impact: 'Su set en el Mainstage aportará la estética más futurista y de baile, ideal para hacer puente entre el reguetón y los fans de la música electrónica.',
+                spotifyId: '4fSIb4hdOQ151TILNsSEaF', // Todo De Ti
+                imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Rauw_Alejandro_2021.jpg/800px-Rauw_Alejandro_2021.jpg'
+            },
+            'myke': {
+                name: 'MYKE TOWERS',
+                tag: 'Global Guest • PR',
+                headerClass: 'from-gray-400 to-gray-800',
+                bio: 'Conocido como el "Young King", es uno de los letristas y raperos más prolíficos y consistentes de la escena puertorriqueña actual.',
+                impact: 'Asegura la cuota de "malianteo" y éxitos de discoteca que mantienen la energía a tope en el Stage de "El Bohío Underground".',
+                spotifyId: '7qZzxKxUjPmt7BqY7T384v', // LALA
+                imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Myke_Towers_2021.jpg/800px-Myke_Towers_2021.jpg'
+            },
+            'eladio': {
+                name: 'ELADIO CARRIÓN',
+                tag: 'Global Guest • US/PR',
+                headerClass: 'from-red-500 to-red-900',
+                bio: 'El principal exponente del Trap Latino moderno. Letras pesadas, beats oscuros y una conexión inmensa con la cultura del hip-hop y el streetwear.',
+                impact: 'Atrae a los fanáticos acérrimos del Trap y el rap, diversificando la audiencia del festival y dominando el horario nocturno.',
+                spotifyId: '7pIHFteI6xT0FwLMTi72uD', // Mbappe
+                imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Eladio_Carrion_2021.jpg/800px-Eladio_Carrion_2021.jpg'
+            },
+            'mora': {
+                name: 'MORA',
+                tag: 'Global Guest • PR',
+                headerClass: 'from-tropical-leaf to-tropical-dark',
+                bio: 'Cantante, productor y compositor clave detrás de muchos éxitos globales. Su estilo melancólico y electrónico ha creado una subcultura fiel entre los jóvenes.',
+                impact: 'Conecta emocionalmente con el público más joven del festival. Sus presentaciones generan coros masivos que se viralizan instantáneamente en TikTok.',
+                spotifyId: '2j6KxP8oW57O9M8P21I4P9', // Memorias
+                imgUrl: 'https://images.unsplash.com/photo-1549834125-82d3c48159a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Imagen conceptual urbana por si no hay wiki
+            }
+        };
+
+        const artistModal = document.getElementById('artistModal');
+        const artistModalContent = document.getElementById('artistModalContent');
+
+        function openArtistModal(artistId) {
+            const data = artistsData[artistId];
+            if (!data) return;
+
+            // Populate data
+            document.getElementById('artistName').textContent = data.name;
+            document.getElementById('artistTag').textContent = data.tag;
+            document.getElementById('artistBio').textContent = data.bio;
+            document.getElementById('artistImpact').textContent = data.impact;
+            
+            // Set Image
+            const img = document.getElementById('artistModalImage');
+            img.src = data.imgUrl;
+            
+            // Set Spotify Player
+            const iframe = document.getElementById('spotifyIframe');
+            iframe.src = `https://open.spotify.com/embed/track/${data.spotifyId}?utm_source=generator&theme=0`;
+            
+            // Set styles
+            const glow = document.getElementById('artistModalGlow');
+            glow.className = `absolute inset-0 blur-xl opacity-40 rounded-full scale-110 bg-gradient-to-r ${data.headerClass}`;
+            
+            const headerBg = document.getElementById('artistModalHeaderBg');
+            headerBg.className = `absolute top-0 left-0 w-full h-32 bg-gradient-to-r ${data.headerClass} opacity-30`;
+
+            // Open Modal
+            document.body.style.overflow = 'hidden';
+            artistModal.classList.remove('hidden');
+            setTimeout(() => {
+                artistModal.classList.remove('opacity-0');
+                artistModalContent.classList.remove('scale-95');
+                artistModalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeArtistModal() {
+            artistModal.classList.add('opacity-0');
+            artistModalContent.classList.remove('scale-100');
+            artistModalContent.classList.add('scale-95');
+            
+            // Stop playing music by clearing iframe src
+            setTimeout(() => {
+                document.getElementById('spotifyIframe').src = "";
+            }, 300);
+
+            setTimeout(() => {
+                artistModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        // --- Canvas Info Modal Logic ---
+        const canvasTexts = {
+            '1': { t: '1. Propuesta de valor', d: 'Festival internacional de reguetón de tres dias en el Caribe colombiano. Integra artistas reconocidos, escenarios inmersivos, playa, cultura local, gastronomía y experiencias turisticas. Busca ofrecer una experiencia musical de destino, no solarmente un concierto.'},
+            '2': { t: '2. Segmentos de clientes', d: 'Público colombiano; visitantes de Latinoamérica y otros mercados internacionales; seguidores del reguetón y la música urbana; viajeros interesados en festivales y turismo experiencial; marcas que buscan conectar con audiencias jóvenes y viajeras.'},
+            '3': { t: '3. Canales', d: 'Sitio web oficial y boletería digital; Instagram, TikTok, YouTube y otros canales sociales; artistas, creadores de contenido e influenciadores; agencias de viajes y operadores turísticos; alianzas con hoteles, aerolíneas y medios.'},
+            '4': { t: '4. Relación con clientes', d: 'Comunidad digital del festival; preventas y beneficios por compra anticipada; atención antes y durante el viaje; paquetes y experiencias premium; comunicación multilingüe; contenido audiovisual antes, durante y después del evento.'},
+            '5': { t: '5. Fuentes de ingresos', d: 'Abonos de tres días y entradas por jornada; entradas VIP; patrocinios; espacios comerciales y activaciones de marca; gastronomía; merchandising; experiencias especiales y paquetes turísticos vendidos mediante aliados habilitados.'},
+            '6': { t: '6. Recursos clave', d: 'Marca y propiedad intelectual; contratos y derechos de artistas; espacios autorizados; escenarios, sonido e iluminación; infraestructura y energía; personal especializado; capital de trabajo; tecnología de boletería; planes de seguridad, salud y sostenibilidad.'},
+            '7': { t: '7. Actividades clave', d: 'Planeación y producción; contratación de artistas; diseño y montaje de escenarios; mercadeo y venta; gestión de permisos; logistica aérea, marítima y terrestre; seguridad y atención médica; gestión de residuos; coordinación con proveedores y comunidad.'},
+            '8': { t: '8. Socios clave', d: 'Comunidad raizal y organizaciones locales; autoridades competentes; operadores turísticos; alojamientos, restaurantes y transportadores; productoras; promotores y representantes de artistas; proveedores técnicos; patrocinadores; servicios de emergencia y seguridad.'},
+            '9': { t: '9. Estructura de costos', d: 'Artistas y producción; transporte de artistas, personal y equipos; montaje y desmontaje; sonido, iluminación y pantallas; energia, conectividad y saneamiento; seguridad, seguros y atención médica; permisos y estudios; mercadeo; personal; transporte local y gestión ambiental.'}
+        };
+
+        const canvasModal = document.getElementById('canvasModal');
+        const canvasModalContent = document.getElementById('canvasModalContent');
+
+        function openCanvasModal(id) {
+            const data = canvasTexts[id];
+            if(!data) return;
+            document.getElementById('canvasModalTitle').textContent = data.t;
+            document.getElementById('canvasModalText').textContent = data.d;
+
+            canvasModal.classList.remove('hidden');
+            setTimeout(() => {
+                canvasModal.classList.remove('opacity-0');
+                canvasModalContent.classList.remove('scale-95');
+                canvasModalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeCanvasModal() {
+            canvasModal.classList.add('opacity-0');
+            canvasModalContent.classList.remove('scale-100');
+            canvasModalContent.classList.add('scale-95');
+            setTimeout(() => {
+                canvasModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // --- Mobile Menu Logic ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.querySelector('#mobileMenuBtn i');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('flex');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        // --- Payment Modal Logic ---
+        const paymentModal = document.getElementById('paymentModal');
+        const paymentModalContent = document.getElementById('paymentModalContent');
+        const paymentForm = document.getElementById('paymentForm');
+        const paymentSuccess = document.getElementById('paymentSuccess');
+
+        function openPaymentModal(ticketName, ticketPrice) {
+            document.getElementById('checkoutTicketName').textContent = ticketName;
+            document.getElementById('checkoutTicketPrice').textContent = ticketPrice;
+            
+            paymentForm.reset();
+            paymentSuccess.classList.add('hidden');
+            paymentSuccess.classList.remove('flex');
+            
+            document.body.style.overflow = 'hidden';
+            paymentModal.classList.remove('hidden');
+            setTimeout(() => {
+                paymentModal.classList.remove('opacity-0');
+                paymentModalContent.classList.remove('scale-95');
+                paymentModalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closePaymentModal() {
+            paymentModal.classList.add('opacity-0');
+            paymentModalContent.classList.remove('scale-100');
+            paymentModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                paymentModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        function handlePaymentSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnPay');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Procesando...';
+            btn.classList.add('opacity-70');
+            btn.disabled = true;
+            
+            // Simular tiempo de procesamiento de la pasarela
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('opacity-70');
+                btn.disabled = false;
+                
+                paymentSuccess.classList.remove('hidden');
+                paymentSuccess.classList.add('flex');
+            }, 2000);
+        }
+
+        // --- Floating Radio Logic ---
+        function toggleRadio() {
+            const player = document.getElementById('radioPlayer');
+            if (player.classList.contains('hidden')) {
+                player.classList.remove('hidden');
+                setTimeout(() => player.classList.remove('scale-95'), 10);
+            } else {
+                player.classList.add('scale-95');
+                setTimeout(() => player.classList.add('hidden'), 300);
+            }
+        }
+    </script>
+</body>
+</html>
